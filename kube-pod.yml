@@ -1,0 +1,15 @@
+# WARNING, this is rendered using templates/kube-pod.yml
+# any changes here will not be reflected on the next build
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debugging-tools
+spec:
+  containers:
+  - name: debugging-tools
+    image: armory/debugging-tools:92bdbb9
+    command:
+      - tail
+      - -f
+      - /dev/random
