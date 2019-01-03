@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
   - name: debugging-tools
-    image: armory/debugging-tools:92bdbb9
+    image: armory/debugging-tools:master-77da5d7
     command:
       - tail
       - -f
