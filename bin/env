@@ -1,2 +1,3 @@
 export GIT_HASH=$(git rev-parse --short HEAD)
-export DOCKER_TAG="${GIT_HASH}"
+export GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+export DOCKER_TAG="${GIT_BRANCH}-${GIT_HASH}"
