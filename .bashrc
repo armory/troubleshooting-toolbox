@@ -18,3 +18,5 @@ source <(kubectl completion bash)
 # add completion
 complete -o default -F __start_kubectl k
 complete -o default -F __start_kubectl kub
+
+complete -C $(which vault) vault
