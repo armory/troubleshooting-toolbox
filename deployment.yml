@@ -1,6 +1,5 @@
-# WARNING, this is rendered using templates/kube-pod.yml
+# WARNING, this is rendered using templates/deployment.yml
 # any changes here will not be reflected on the next build
-
 
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -34,8 +33,8 @@ spec:
         - tail
         - -f
         - /dev/null
-        image: armory/debugging-tools:master-304fca8
-        imagePullPolicy: IfNotPresent
+        image: armory/debugging-tools:master-c238e97
+        imagePullPolicy: Always
         name: debugging-tools
         resources: {}
         terminationMessagePath: /dev/termination-log

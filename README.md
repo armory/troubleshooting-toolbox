@@ -12,6 +12,6 @@ kubectl --context=MY_CONTEXT -n MY_NAMESPACE apply -f  https://raw.githubusercon
 git commit -m "fix(component): your commit message here"
 ./bin/build.sh  # will build a new container and kub manifest
 ./bin/push.sh   # will push the docker container and new manifest
-git commit -m "chore(kube-manifest): update new docker image" kube-pod.yml
+git commit -m "chore(kube-manifest): update new docker image" deployment.yml
 git push
 ```
