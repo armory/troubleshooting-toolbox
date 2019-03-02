@@ -36,5 +36,11 @@ RUN curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/
 ENV PATH "$PATH:/usr/local/bin/aws-iam-authenticator"
 
 
+# install vault for debugging
+RUN curl -O https://releases.hashicorp.com/vault/1.0.3/vault_1.0.3_linux_amd64.zip \
+  && unzip vault* \
+  && mv vault /usr/bin/ \
+  && rm -rf vault*
+
 # setup some bash completion
 COPY .bashrc /root/.bashrc
