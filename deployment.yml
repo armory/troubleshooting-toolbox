@@ -33,7 +33,7 @@ spec:
         - tail
         - -f
         - /dev/null
-        image: armory/debugging-tools:master-c238e97
+        image: armory/debugging-tools:master-9f10b29
         imagePullPolicy: Always
         name: debugging-tools
         resources: {}
