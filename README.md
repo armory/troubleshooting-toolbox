@@ -7,6 +7,7 @@ The [`deployment.yml`](https://github.com/armory/docker-debugging-tools/blob/mas
 MY_CONTEXT=blah
 MY_NAMESPACE=blah
 kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE apply -f  https://raw.githubusercontent.com/armory/docker-debugging-tools/master/deployment.yml
+kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE delete deployment debugging-tools
 ```
 
 ## Building, committing, and pushing
