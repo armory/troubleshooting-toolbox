@@ -7,7 +7,10 @@ The [`deployment.yml`](https://github.com/armory/docker-debugging-tools/blob/mas
 MY_CONTEXT=blah
 MY_NAMESPACE=blah
 kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE apply -f  https://raw.githubusercontent.com/armory/docker-debugging-tools/master/deployment.yml
-kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE exec -it $(kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE get pod -l app=debugging-tools --output=jsonpath={.items..metadata.name}) bash
+
+POD_NAME=$(kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE get pod -l app=debugging-tools --output=jsonpath={.items..metadata.name})
+kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE exec -it $POD_NAME bash
+
 kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE delete deployment debugging-tools
 ```
 
