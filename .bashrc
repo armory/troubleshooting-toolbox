@@ -20,3 +20,5 @@ complete -o default -F __start_kubectl k
 complete -o default -F __start_kubectl kub
 
 complete -C $(which vault) vault
+
+complete -C aws_completer aws
