@@ -18,6 +18,7 @@ RUN apk update && apk add --no-cache \
   py-pip \
   python \
   vim \
+  redis \
   && pip install --upgrade awscli==$AWS_CLI_VERSION && \
   rm -rf /var/cache/apk/*
 
