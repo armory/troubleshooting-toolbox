@@ -17,6 +17,7 @@ RUN apk update && apk add --no-cache \
   mailcap \
   py-pip \
   python \
+  redis \
   vim \
   && pip install --upgrade awscli==$AWS_CLI_VERSION && \
   rm -rf /var/cache/apk/*
