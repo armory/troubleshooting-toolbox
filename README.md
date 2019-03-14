@@ -4,8 +4,8 @@ This repo contains the Dockerfile for [armory/debugging-tools](https://cloud.doc
 
 The [`deployment.yml`](https://github.com/armory/docker-debugging-tools/blob/master/kube-pod.yml) manifest is available to put into your kubernetes cluster.
 ```bash
-MY_CONTEXT=blah
-MY_NAMESPACE=blah
+MY_CONTEXT=
+MY_NAMESPACE=
 kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE apply -f  https://raw.githubusercontent.com/armory/docker-debugging-tools/master/deployment.yml
 
 POD_NAME=$(kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE get pod -l app=debugging-tools --output=jsonpath={.items..metadata.name})
