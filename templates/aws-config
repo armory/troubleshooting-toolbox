@@ -1,0 +1,3 @@
+[profile test]
+role_arn=arn:aws:iam::999999999999999999999999:role/SpinnakerManagedProfile
+credential_source = Ec2InstanceMetadata

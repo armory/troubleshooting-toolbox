@@ -43,5 +43,8 @@ RUN curl -O https://releases.hashicorp.com/vault/1.0.3/vault_1.0.3_linux_amd64.z
   && rm -rf vault*
 
 
+# copy over a default (not working) ~/.aws/config for easier assume role tests
+COPY templates/aws-config /root/.aws/config
+
 # setup some bash completion
 COPY .bashrc /root/.bashrc
