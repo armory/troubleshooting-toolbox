@@ -51,3 +51,5 @@ COPY templates/aws-config /root/.aws/config
 
 # setup some bash completion
 COPY .bashrc /root/.bashrc
+
+ENTRYPOINT bash
