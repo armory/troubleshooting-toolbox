@@ -1,5 +1,5 @@
 FROM alpine:3.8
-MAINTAINER Armory <eng@amrory.io>
+MAINTAINER Armory <eng@armory.io>
 
 ENV KUBECTL_RELEASE=1.11.5
 ENV HEPTIO_BINARY_RELEASE_DATE=2018-12-06
