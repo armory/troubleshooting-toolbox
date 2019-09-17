@@ -4,4 +4,5 @@ cd "$(dirname "$0")/.."
 
 source bin/env
 
-docker push armory/debugging-tools:${DOCKER_TAG}
+
+docker push "${DOCKER_IMAGE}"
