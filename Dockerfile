@@ -10,6 +10,7 @@ ENV VAULT_VERSION=1.2.0
 
 # apk packages
 RUN apk update && apk add --no-cache \
+  bind-tools \
   bash \
   bash-completion \
   curl \
