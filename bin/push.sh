@@ -6,3 +6,4 @@ source bin/env
 
 
 docker push "${DOCKER_IMAGE}"
+docker push "${DOCKER_SSH_IMAGE}"

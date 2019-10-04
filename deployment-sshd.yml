@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    name: sshd
+  name: sshd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: sshd
+  template:
+    metadata:
+      labels:
+        name: sshd
+    spec:
+      containers:
+      - image: armory/sshd:latest
+        imagePullPolicy: Always
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        name: sshd
+        volumeMounts:
+        - name: ssh-key
+          mountPath: /root/.ssh
+      volumes:
+      - name: ssh-key
+        configMap:
+          name: ssh-key
+          defaultMode: 0600
