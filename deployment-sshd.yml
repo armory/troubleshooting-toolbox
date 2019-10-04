@@ -2,20 +2,20 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    name: sshd
-  name: sshd
+    name: debugging-tools-sshd
+  name: debugging-tools-sshd
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: sshd
+      name: debugging-tools-sshd
   template:
     metadata:
       labels:
-        name: sshd
+        name: debugging-tools-sshd
     spec:
       containers:
-      - image: armory/sshd:latest
+      - image: armory/debugging-tools-sshd:latest
         imagePullPolicy: Always
         resources: {}
         terminationMessagePath: /dev/termination-log
