@@ -16,6 +16,29 @@ kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE exec -it $POD_NAME bash
 kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE delete deployment debugging-tools
 ```
 
+## SSH Server for reverse tunneling
+
+This repo also contains the Dockerfile for a ssh server, useful for making reverse tunnels to achieve a kind of "kubectl reverse-port-forward" behavior, and be able to expose services running in your local machine to the rest of the cluster. This server requires that you mount a `id_rsa.pub` key into `/root/.ssh/authorized_keys` to be able to log in.
+```bash
+MY_CONTEXT=
+MY_NAMESPACE=
+kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE create cm ssh-key --from-file=authorized_keys=${HOME}/.ssh/id_rsa.pub --dry-run -o yaml | kubectl apply -f -
+kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE apply -f https://raw.githubusercontent.com/armory/docker-debugging-tools/master/deployment-sshd.yml
+```
+To run the reverse proxy first forward ssh port:
+```bash
+kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE port-forward deployment/debugging-tools-sshd 2222:22 &
+```
+Then in separate terminals run ssh client for as many port as needed:
+```bash
+PORT_TO_FORWARD_1=
+ssh -p 2222 -g -R $PORT_TO_FORWARD_1:localhost:$PORT_TO_FORWARD_1 root@localhost
+
+# --- Separate terminal ---
+PORT_TO_FORWARD_2=
+ssh -p 2222 -g -R $PORT_TO_FORWARD_2:localhost:$PORT_TO_FORWARD_2 root@localhost
+```
+
 ## Building, committing, and pushing
 ```bash
 git commit -m "fix(component): your commit message here"

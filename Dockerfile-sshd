@@ -1,0 +1,15 @@
+#
+# To login to the SSH server, put a public key (id_rsa.pub) in /root/.ssh/authorized_keys
+#
+FROM alpine:3.5
+
+RUN apk --update add --no-cache openssh bash curl
+
+COPY templates/sshd_config /etc/ssh/sshd_config
+
+RUN /usr/bin/ssh-keygen -A
+
+RUN ssh-keygen -t rsa -b 4096 -f  /etc/ssh/ssh_host_key
+
+EXPOSE 22
+CMD ["/usr/sbin/sshd","-D"]
