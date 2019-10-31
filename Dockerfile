@@ -23,16 +23,17 @@ RUN apk update && apk add --no-cache \
   python \
   redis \
   vim \
+  netcat-openbsd \
   && pip install --upgrade awscli==$AWS_CLI_VERSION \
   && rm -rf /var/cache/apk/*
 
 
 # install kubectl, latest version can be found here: https://storage.googleapis.com/kubernetes-release/release/stable.txt
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_RELEASE}/bin/linux/amd64/kubectl \
-    && chmod +x ./kubectl \
-    && mv ./kubectl /usr/local/bin/kubectl \
-    && ln -sv /usr/local/bin/kubectl /usr/local/bin/k \
-    && ln -sv /usr/local/bin/kubectl /usr/local/bin/kub
+  && chmod +x ./kubectl \
+  && mv ./kubectl /usr/local/bin/kubectl \
+  && ln -sv /usr/local/bin/kubectl /usr/local/bin/k \
+  && ln -sv /usr/local/bin/kubectl /usr/local/bin/kub
 
 
 # install aws-iam-authenticator for kubectl
