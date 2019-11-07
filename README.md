@@ -39,6 +39,29 @@ PORT_TO_FORWARD_2=
 ssh -p 2222 -g -R $PORT_TO_FORWARD_2:localhost:$PORT_TO_FORWARD_2 root@localhost
 ```
 
+
+## Using this as Daemonset
+Sometimes it's useful to debug some issues with a node, especially in networking situations.
+You can also deploy `debugging-tools` out as a daemonset.
+
+> Note: you can also uncomment `.spec.template.spec.nodeName` to pin the container to a certain node. See https://kubernetes.io/docs/concepts/configuration/assign-pod-node/ for more details.
+```bash
+MY_CONTEXT=
+MY_NAMESPACE=
+kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE apply -f  https://raw.githubusercontent.com/armory/docker-debugging-tools/master/daemonset.yml
+
+kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE get pods -o wide
+
+# get a pod from above that's on the right node
+kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE exec -it $POD_NAME bash
+
+
+# and when you're done, delete the daemonset
+kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE delete daemonset debugging-tools
+```
+
+
+
 ## Building, committing, and pushing
 ```bash
 git commit -m "fix(component): your commit message here"
