@@ -8,8 +8,7 @@ MY_CONTEXT=
 MY_NAMESPACE=
 kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE apply -f  https://raw.githubusercontent.com/armory/docker-debugging-tools/master/deployment.yml
 
-POD_NAME=$(kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE get pod -l app=debugging-tools -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' --sort-by=".status.startTime" | tail -n 1)
-kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE exec -it $POD_NAME bash
+kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE exec -it deploy/debugging-tools -- bash
 
 
 # and when you're done, delete the deployment
