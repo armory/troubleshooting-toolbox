@@ -7,8 +7,8 @@ node {
             stage("Build and push") {
                 sh("""#!/bin/bash -xe
                 export DOCKER_TAG=latest
-                ./bin/build.sh
-                ./bin/push.sh
+                ./docker-debugging-tools/bin/build.sh
+                ./docker-debugging-tools/bin/push.sh
                 """)
             }
         }
