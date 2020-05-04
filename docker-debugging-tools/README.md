@@ -2,11 +2,11 @@
 
 This repo contains the Dockerfile for [armory/debugging-tools](https://hub.docker.com/r/armory/debugging-tools).
 
-The [`deployment.yml`](https://github.com/armory/docker-debugging-tools/blob/master/deployment.yml) manifest is available to put into your kubernetes cluster.
+The [`deployment.yml`](https://github.com/armory/docker-debugging-tools/blob/master/docker-debugging-tools/deployment.yml) manifest is available to put into your kubernetes cluster.
 ```bash
 MY_CONTEXT=
 MY_NAMESPACE=
-kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE apply -f  https://raw.githubusercontent.com/armory/docker-debugging-tools/master/deployment.yml
+kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE apply -f  https://raw.githubusercontent.com/armory/docker-debugging-tools/master/docker-debugging-tools/deployment.yml
 
 kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE exec -it deploy/debugging-tools -- bash
 
@@ -22,7 +22,7 @@ This repo also contains the Dockerfile for a ssh server, useful for making rever
 MY_CONTEXT=
 MY_NAMESPACE=
 kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE create cm ssh-key --from-file=authorized_keys=${HOME}/.ssh/id_rsa.pub --dry-run -o yaml | kubectl apply -f -
-kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE apply -f https://raw.githubusercontent.com/armory/docker-debugging-tools/master/deployment-sshd.yml
+kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE apply -f https://raw.githubusercontent.com/armory/docker-debugging-tools/master/docker-debugging-tools/deployment-sshd.yml
 ```
 To run the reverse proxy first forward ssh port:
 ```bash
@@ -47,7 +47,7 @@ You can also deploy `debugging-tools` out as a daemonset.
 ```bash
 MY_CONTEXT=
 MY_NAMESPACE=
-kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE apply -f  https://raw.githubusercontent.com/armory/docker-debugging-tools/master/daemonset.yml
+kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE apply -f  https://raw.githubusercontent.com/armory/docker-debugging-tools/master/docker-debugging-tools/daemonset.yml
 
 kubectl --context=$MY_CONTEXT -n $MY_NAMESPACE get pods -o wide
 
