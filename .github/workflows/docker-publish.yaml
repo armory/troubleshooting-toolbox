@@ -5,6 +5,9 @@ on:
 
 jobs:
   main:
+    env:
+      ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -12,7 +15,7 @@ jobs:
 
       - name: Login to Artifactory
         run: |
-          docker login -u ${{ secrets.ARTIFACTORY_USER }} -p ${{ secrets.ARTIFACTORY_PASSWORD }} ${{ secrets.ARTIFACTORY_URL }}
+          docker login -u ${{ secrets.ARTIFACTORY_USER }} -p ${{ secrets.ARTIFACTORY_PASSWORD }} "$ARTIFACTORY_URL"
 
       - name: Publish Docker Image
         run: |
