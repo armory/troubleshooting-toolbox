@@ -1,0 +1,29 @@
+name: Publish Armory Spinnaker Container
+on:
+  push:
+    - master
+
+jobs:
+  main:
+    env:
+      ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Login to Artifactory
+        run: |
+          docker login -u ${{ secrets.ARTIFACTORY_USER }} -p ${{ secrets.ARTIFACTORY_PASSWORD }} "$ARTIFACTORY_URL"
+
+      - name: Publish Docker Image
+        run: |
+          ARMORY_TOOLS_VERSION="$(python3 -c 'import sys; print(sys.argv[1].split("/")[2])' $GITHUB_REF)-$GITHUB_SHA"
+          ARMORY_IMAGE_NAME="$ARTIFACTORY_URL/armory-io/docker-debugging-tools:$ARMORY_TOOLS_VERSION"
+          ARMORY_IMAGE_NAME_LATEST="$ARTIFACTORY_URL/armory-io/docker-debugging-tools:latest"
+          docker build -t "$ARMORY_IMAGE_NAME" ./docker-debugging-tools/
+          docker tag "$ARMORY_IMAGE_NAME" "$ARMORY_IMAGE_NAME_LATEST"
+
+          docker push "$ARMORY_IMAGE_NAME"
+          docker push "$ARMORY_IMAGE_NAME_LATEST"
