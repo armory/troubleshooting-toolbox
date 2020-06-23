@@ -1,11 +1,11 @@
-FROM alpine:3.10
+FROM alpine:3.12
 MAINTAINER Armory <eng@armory.io>
 
-ENV KUBECTL_RELEASE=1.13.7
-ENV AWS_IAM_AUTHENTICATOR_VERSION=2019-06-11
-ENV JQ_VERSION=1.6-r0
-ENV AWS_CLI_VERSION=1.16.208
-ENV VAULT_VERSION=1.2.0
+ENV KUBECTL_RELEASE=1.16.8
+ENV AWS_IAM_AUTHENTICATOR_VERSION=2020-04-16
+ENV JQ_VERSION=1.6-r1
+ENV AWS_CLI_VERSION=1.18.83
+ENV VAULT_VERSION=1.4.2
 
 
 # apk packages
@@ -20,7 +20,7 @@ RUN apk update && apk add --no-cache \
   less \
   mailcap \
   py-pip \
-  python \
+  python3 \
   redis \
   vim \
   && pip install --upgrade awscli==$AWS_CLI_VERSION \
