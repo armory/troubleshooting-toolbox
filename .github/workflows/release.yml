@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build Debugging Tools Container
         run: |
-          export DOCKER_TAG="${GITHUB_REF##/*/}"
+          export DOCKER_TAG="${GITHUB_REF##*/}"
           cd docker-debugging-tools
           ./bin/build.sh
           docker login -u ${{ secrets.DOCKER_HUB_USER }} -p '${{ secrets.DOCKER_HUB_PASS }}'
