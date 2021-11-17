@@ -1,0 +1,21 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Release Debugging Tools
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_TAG: '${{ github.ref }}'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Debugging Tools Container
+        run: |
+          cd docker-debugging-tools
+          ./bin/build.sh
+          docker login -u ${{ secrets.DOCKER_HUB_USER }} -p '${{ secrets.DOCKER_HUB_PASS }}'
+          ./bin/push.sh
