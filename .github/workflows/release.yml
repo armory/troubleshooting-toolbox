@@ -18,5 +18,5 @@ jobs:
           export DOCKER_TAG="${GITHUB_REF##*/}"
           cd docker-debugging-tools
           ./bin/build.sh
-          docker login -u ${{ secrets.DOCKER_HUB_USER }} -p '${{ secrets.DOCKER_HUB_PASS }}'
+          docker login -u "${{ secrets.DOCKER_HUB_USER }}" -p "${{ secrets.DOCKER_HUB_PASS }}"
           ./bin/push.sh
