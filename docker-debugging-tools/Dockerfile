@@ -1,12 +1,11 @@
-FROM alpine:3.12
+FROM alpine:3
 MAINTAINER Armory <eng@armory.io>
 
-ENV KUBECTL_RELEASE=1.16.8
-ENV AWS_IAM_AUTHENTICATOR_VERSION=2020-04-16
-ENV JQ_VERSION=1.6-r1
-ENV AWS_CLI_VERSION=1.18.83
-ENV VAULT_VERSION=1.4.2
-
+ENV KUBECTL_RELEASE=1.26.2
+ENV AWS_IAM_AUTHENTICATOR_VERSION=0.6.2
+ENV JQ_VERSION=1.6-r2
+ENV AWS_CLI_VERSION=1.27.87
+ENV VAULT_VERSION=1.13.0
 
 # apk packages
 RUN apk update && apk add --no-cache \
@@ -19,13 +18,13 @@ RUN apk update && apk add --no-cache \
   jq=$JQ_VERSION \
   less \
   mailcap \
+  mysql-client \
   py-pip \
   python3 \
   redis \
   vim \
   && pip install --upgrade awscli==$AWS_CLI_VERSION \
   && rm -rf /var/cache/apk/*
-
 
 # install kubectl, latest version can be found here: https://storage.googleapis.com/kubernetes-release/release/stable.txt
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_RELEASE}/bin/linux/amd64/kubectl \
@@ -34,21 +33,17 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECT
     && ln -sv /usr/local/bin/kubectl /usr/local/bin/k \
     && ln -sv /usr/local/bin/kubectl /usr/local/bin/kub
 
-
-# install aws-iam-authenticator for kubectl
-RUN curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/${KUBECTL_RELEASE}/${AWS_IAM_AUTHENTICATOR_VERSION}/bin/linux/amd64/aws-iam-authenticator \
+# install aws-iam-authenticator, latest version can be found here: https://github.com/kubernetes-sigs/aws-iam-authenticator/releases
+# note: for EKS you can also use `aws eks get-token` now, see https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
+RUN  curl -Lo aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v${AWS_IAM_AUTHENTICATOR_VERSION}/aws-iam-authenticator_${AWS_IAM_AUTHENTICATOR_VERSION}_linux_amd64 \
   && chmod +x ./aws-iam-authenticator \
   && mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
-
-ENV PATH "$PATH:/usr/local/bin/aws-iam-authenticator"
-
 
 # install vault, latest version can be found here: https://www.vaultproject.io/downloads.html
 RUN curl -O https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip \
   && unzip vault* \
   && mv vault /usr/bin/ \
   && rm -rf vault*
-
 
 # copy over a default (not working) ~/.aws/config for easier assume role tests
 COPY templates/aws-config /root/.aws/config
