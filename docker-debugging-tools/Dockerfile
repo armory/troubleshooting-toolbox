@@ -23,7 +23,7 @@ RUN apk update && apk add --no-cache \
   python3 \
   redis \
   vim \
-  && pip install --upgrade awscli==$AWS_CLI_VERSION \
+  && pip install  --no-build-isolation --upgrade awscli==$AWS_CLI_VERSION \
   && rm -rf /var/cache/apk/*
 
 # install kubectl, latest version can be found here: https://storage.googleapis.com/kubernetes-release/release/stable.txt
