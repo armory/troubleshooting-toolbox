@@ -1,7 +1,7 @@
 #
 # To login to the SSH server, put a public key (id_rsa.pub) in /root/.ssh/authorized_keys
 #
-FROM alpine:3.5
+FROM alpine:3.7
 
 RUN apk --update add --no-cache openssh bash curl
 

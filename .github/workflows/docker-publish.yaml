@@ -13,17 +13,29 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Install regctl
+        uses: iarekylew00t/regctl-installer@v1
+        with:
+          regctl-release: v0.5.3
+
       - name: Login to Artifactory
         run: |
           docker login -u ${{ secrets.ARTIFACTORY_USER }} -p ${{ secrets.ARTIFACTORY_PASSWORD }} "$ARTIFACTORY_URL"
 
-      - name: Publish Docker Image
+      - name: Publish The Version Docker Image
+        id: publish_image
         run: |
           ARMORY_TOOLS_VERSION="$(python3 -c 'import sys; print(sys.argv[1].split("/")[2])' $GITHUB_REF)-$GITHUB_SHA"
           ARMORY_IMAGE_NAME="$ARTIFACTORY_URL/armory-io/docker-debugging-tools:$ARMORY_TOOLS_VERSION"
-          ARMORY_IMAGE_NAME_LATEST="$ARTIFACTORY_URL/armory-io/docker-debugging-tools:latest"
-          docker build -t "$ARMORY_IMAGE_NAME" ./docker-debugging-tools/
-          docker tag "$ARMORY_IMAGE_NAME" "$ARMORY_IMAGE_NAME_LATEST"
+          docker buildx build --push --platform linux/arm64,linux/amd64 -t "$ARMORY_IMAGE_NAME" ./docker-debugging-tools/
+          echo "version_image=$ARMORY_IMAGE_NAME" >> $GITHUB_OUTPUT
 
-          docker push "$ARMORY_IMAGE_NAME"
-          docker push "$ARMORY_IMAGE_NAME_LATEST"
+      - name: Re-Tagging Docker Image Version
+        run: |
+          regctl image copy ${{ steps.publish_image.outputs.version_image }}  ${{ env.ARTIFACTORY_URL }}/armory-io/docker-debugging-tools:latest
