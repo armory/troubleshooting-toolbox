@@ -2,5 +2,5 @@
 cd "$(dirname "$0")/.."
 
 source bin/env
-docker build -t "${DOCKER_IMAGE}" .
-docker build -t "${DOCKER_SSH_IMAGE}" -f Dockerfile-sshd .
+docker buildx build --push --platform linux/arm64,linux/amd64 -t "${DOCKER_IMAGE}" .
+docker buildx build --push --platform linux/arm64,linux/amd64 -t "${DOCKER_SSH_IMAGE}" -f Dockerfile-sshd .

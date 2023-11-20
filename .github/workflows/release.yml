@@ -13,10 +13,18 @@ jobs:
       GITHUB_REF: '${{ github.ref }}'
     steps:
       - uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Docker Login
+        run: docker login -u "${{ secrets.DOCKER_HUB_USER }}" -p "${{ secrets.DOCKER_HUB_PASS }}"
+
       - name: Build Debugging Tools Container
         run: |
           export DOCKER_TAG="${GITHUB_REF##*/}"
           cd docker-debugging-tools
           ./bin/build.sh
-          docker login -u "${{ secrets.DOCKER_HUB_USER }}" -p "${{ secrets.DOCKER_HUB_PASS }}"
-          ./bin/push.sh
