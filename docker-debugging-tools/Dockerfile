@@ -3,11 +3,10 @@ MAINTAINER Armory <eng@armory.io>
 
 ARG TARGETARCH
 
-ENV KUBECTL_RELEASE=1.27.3
-ENV AWS_IAM_AUTHENTICATOR_VERSION=0.6.2
+ENV KUBECTL_RELEASE=1.28.4
+ENV AWS_IAM_AUTHENTICATOR_VERSION=0.6.13
 ENV JQ_VERSION=1.6-r3
-ENV AWS_CLI_VERSION=1.27.87
-ENV VAULT_VERSION=1.13.0
+ENV VAULT_VERSION=1.15.2
 
 # apk packages
 RUN apk update && apk add --no-cache \
@@ -25,7 +24,7 @@ RUN apk update && apk add --no-cache \
   python3 \
   redis \
   vim \
-  && pip install  --no-build-isolation --upgrade awscli==$AWS_CLI_VERSION \
+  aws-cli\
   && rm -rf /var/cache/apk/*
 
 # install kubectl, latest version can be found here: https://storage.googleapis.com/kubernetes-release/release/stable.txt
