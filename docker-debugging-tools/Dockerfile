@@ -17,7 +17,6 @@ RUN apk update && apk add --no-cache \
   curl \
   git \
   groff \
-  jq=$JQ_VERSION \
   less \
   mailcap \
   mysql-client \
