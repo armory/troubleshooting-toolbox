@@ -1,7 +1,8 @@
 name: Publish Armory Spinnaker Container
 on:
   push:
-    - master
+    branches:
+      - master
 
 jobs:
   main:
